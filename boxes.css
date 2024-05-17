@@ -1,0 +1,122 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  :root {
+    --bg: hsla(0, 0%, 2%, 0.27);
+  }
+  
+  main {
+    width: 60ch;
+    max-width: 100%;
+  }
+  
+  ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+  
+  li {
+    padding: 1rem;
+    list-style-type: none;
+    position: relative;
+  }
+  
+  ul::after {
+    border-radius: 1rem;
+    content: "";
+    position: absolute;
+    background: hsl(0 0% 10%);
+    pointer-events: none;
+    z-index: 0;
+    top: var(--top, 0);
+    left: var(--left, 0);
+    width: var(--width, 100%);
+    height: var(--height, 100%);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  ul[data-enhanced]:hover {
+    --active: 1;
+  }
+  
+  ul[data-enhanced]::after {
+    opacity: var(--active, 0);
+    transition: opacity 0.3s, top 0.3s, left 0.3s, width 0.3s, height 0.3s;
+  }
+  
+  ul[data-enhanced]:hover::after {
+    transition: opacity 0.3s 0.3s, top 0.3s, left 0.3s, width 0.3s, height 0.3s;
+  }
+  
+  ul:not([data-enhanced]) article::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: hsl(0, 0%, 0%);
+    border-radius: 1rem;
+    opacity: var(--li-active, 0);
+    transition: opacity 0.2s;
+  }
+  
+  article {
+    color: hsl(0 0% 80%);
+    padding: 1rem;
+    display: grid;
+    gap: 0.5rem;
+    position: relative;
+  }
+  
+  article::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(var(--bg) 0 2px, transparent 2px 38px) -20px -20px / 40px 40px,
+      linear-gradient(90deg, var(--bg) 0 2px, transparent 2px 38px) -20px -20px / 40px 40px;
+    mask: linear-gradient(-35deg, var(--bg) 0%, transparent 45%);
+    z-index: -1;
+    opacity: var(--li-active, 0);
+    transition: opacity 0.2s;
+  }
+  
+  li:hover {
+    --li-active: 1;
+    background-color: var(--bg);
+    border-radius: 10px;
+    transition: 0.3s 0.03s ease-in-out;
+  }
+  
+  article h3 {
+    margin: 0;
+    font-weight: 120;
+  }
+  
+  article p {
+    margin: 0;
+    text-wrap: pretty;
+    background: linear-gradient(hsl(0 0% 80%), hsl(0 0% 50%));
+    color: transparent;
+    background-clip: text;
+    font-weight: 80;
+  }
+  
+  article svg {
+    width: 44px;
+  }
+  
+  article svg path {
+    stroke-width: 0.75;
+    stroke: hsl(var(--hue, 30) calc(var(--li-active, 0) * 60%) 60%);
+    transition: stroke 0.2s;
+  }
+  
+  li:nth-of-type(1) { --hue: 30; }
+  li:nth-of-type(2) { --hue: 280; }
+  li:nth-of-type(3) { --hue: 210; }
+  li:nth-of-type(4) { --hue: 120; }
